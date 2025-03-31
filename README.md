@@ -21,8 +21,28 @@ u * d
 1. Artifacts produced from an apply MAY parameterize future applies in a partial form. 
 2. Artifacts produced from an apply MUST parameterize destroys.
 
+You can learn more about the required relationships from the defined traits [directly](./adud/lifecycle/util/src/lib.rs).
+
+Implementing within the `adud` standard allows you to simply derive lifecycle frontends like the below:
+
+```rust
+use clap::Subcommand;
+use lifecycle::{LifecycleFrontend, LifecycleSubcommand};
+use mcr_protocol_deployer_eth_core::Lifecycle;
+
+#[derive(LifecycleSubcommand, Subcommand)]
+#[lifecycle(Lifecycle)]
+#[lifecycle_apply_is_subcommand]
+#[clap(rename_all = "kebab-case")]
+pub enum Eth {}
+```
+
+Wherein a `lifecycle_subcommand::Eth` enum is populated with the `apply` and `destroy` subcommands which manage the lifecycle.  
+
 ## Services
-The same Artifact relationship applies for Services. However, services are expected to continuously run in process, as such the expectation is that artifacts are serialized during the service runtime. s
+The same Artifact relationship applies for Services. However, services are expected to continuously run in process, as such the expectation is that artifacts are serialized during the service runtime.
+
+You can learn more about the required relationships from the defined traits [directly](./adud/service/util/src/lib.rs).
 
 
 ## Contributing and getting started
